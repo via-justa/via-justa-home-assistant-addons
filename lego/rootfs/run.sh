@@ -96,6 +96,6 @@ while true
 do
     bashio::log.debug "running command: /lego ${args} ${cmd}"
     lego ${args} ${cmd}
-    bashio::log.log "sleeping for ${interval}"
+    bashio::log.info "sleeping for ${interval}"
 	sleep ${interval}
 done
