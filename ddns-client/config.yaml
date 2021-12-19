@@ -1,0 +1,25 @@
+# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
+name: DynDNS Client
+version: "0.1.1"
+slug: ddns-client
+description: DynDNS client to update dns record(s) with your current IP if your IP is not static
+url: "https://github.com/via-justa/ddns-client-addon/tree/main/ddns-client"
+image: ghcr.io/via-justa/{arch}-ddns-client
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+options:
+  provider: ""
+  key: ""
+  value: ""
+  records: ""
+  check_interval: 1h
+schema:
+  provider: "str"
+  key: "str"
+  value: "str"
+  records: "str"
+  check_interval: "str"

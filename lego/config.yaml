@@ -1,0 +1,39 @@
+# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
+name: Lego
+version: "0.1.1"
+slug: lego
+description: Let's Encrypt client and ACME library written in Go.
+url: "https://github.com/via-justa/go-acme-lego-addon/tree/main/lego"
+image: ghcr.io/via-justa/{arch}-lego
+map:
+  - ssl:rw
+  - share
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+options:
+  provider: ""
+  domains: []
+  email: ""
+  env_vars:
+    - name: ""
+      value: ""
+schema:
+  provider: str
+  domains: 
+    - str
+  email: str
+  env_vars:
+    - name: match(^([A-Z0-9_])+$)
+      value: str
+  challange: list(dns|http)?
+  renew_threshold: int?
+  interval: str?
+  log_level: list(trace|debug|info|notice|warning|error|fatal)?
+ports:
+  80/tcp: null
+ports_description:
+  80/tcp: Only needed for http challenge
