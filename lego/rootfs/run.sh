@@ -64,6 +64,15 @@ else
     args="${args} --http --http.port :${port}"
 fi
 
+# create new certificates
+for domain in $(bashio::config 'domains'); do
+    if [[ -z "${CERT_PATH}/certificates/${domain}.crt" ]]; then
+        bashio::log.debug "running command: lego ${1} run"
+        bashio::log.info "Certificate for domain ${domain} not found, issuing"
+        lego ${args} run
+    fi
+done
+
 # create/renew certificate
 while true
 do

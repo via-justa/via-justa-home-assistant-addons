@@ -31,15 +31,9 @@ execute() {
     for domain in $(bashio::config 'domains'); do
         bashio::log.debug "checking domain ${domain}"
         args="${1} --domains ${domain}"
-        # select command
-        if [[ -f "${CERT_PATH}/certificates/${domain}.crt" ]]; then
-            bashio::log.debug "running command: lego ${1} run"
-            bashio::log.info "Certificate for domain ${domain} not found, issuing"
-            lego ${args} run
-        else
-            bashio::log.debug "running command: lego ${1} renew --days ${renew_threshold} --renew-hook restart_ha"
-            bashio::log.info "Certificate for domain ${domain} found, checking if renew needed"
-            lego ${args} renew --days ${renew_threshold} --renew-hook restart_ha
-        fi
+
+        bashio::log.debug "running command: lego ${1} renew --days ${renew_threshold} --renew-hook restart_ha"
+        bashio::log.info "Certificate for domain ${domain} found, checking if renew needed"
+        lego ${args} renew --days ${renew_threshold} --renew-hook restart_ha
     done
 }

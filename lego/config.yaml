@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: Lego
-version: "0.2.0"
+version: "0.2.1"
 slug: lego
 description: Let's Encrypt client and ACME library written in Go.
 url: "https://github.com/via-justa/go-acme-lego-addon/tree/main/lego"
