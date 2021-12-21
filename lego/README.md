@@ -14,8 +14,8 @@
 
 Let's Encrypt client and ACME library written in Go.
 
-Supports both HTTP and DNS-01 challanges with a long list of providers
+Supports both HTTP and DNS-01 challenges with a long list of providers
 
 ## Lego vs The built-in Let's Encrypt addon
 
-While the built-in [Let's Encrypt addon](https://github.com/home-assistant/addons/tree/master/letsencrypt) is good and well for HTTP challange, when it comes to DNS-01 challange it supports only very limitaed number of DNS providers (19 as of end of 2021) while [Lego](https://github.com/go-acme/lego) supports 98(!!) different DNS providers. If that's not enough to convince you, the built-in addon does not "watch" the certificate and renew it automatically while this addon does.
+While the built-in [Let's Encrypt addon](https://github.com/home-assistant/addons/tree/master/letsencrypt) is good and well for HTTP challenge, when it comes to DNS-01 challenge it supports only very limited number of DNS providers (19 as of end of 2021) while [Lego](https://github.com/go-acme/lego) supports 98(!!) different DNS providers. If that's not enough to convince you, the built-in addon does not "watch" the certificate and renew it automatically while this addon does.

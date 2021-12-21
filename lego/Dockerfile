@@ -15,8 +15,9 @@ RUN apk add --no-cache -t deps git make musl-dev go \
     && apk del deps && rm -r /root/go \
     && chmod +x /usr/local/bin/lego
 
-# Copy root filesystem
-COPY rootfs/run.sh /
+RUN apk add tzdata jq
+
+COPY rootfs /
 
 RUN chmod a+x /run.sh
 
