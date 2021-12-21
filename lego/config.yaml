@@ -1,6 +1,7 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: Lego
-version: "0.2.1"
+version: "0.3.0"
+stage: experimental
 slug: lego
 description: Let's Encrypt client and ACME library written in Go.
 url: "https://github.com/via-justa/go-acme-lego-addon/tree/main/lego"
@@ -36,9 +37,8 @@ schema:
       value: str
   challenge: list(dns|http)?
   renew_threshold: int?
-  port: int?
   log_level: list(trace|debug|info|notice|warning|error|fatal)?
 ports:
-  8091/tcp: null
+  80/tcp: 8091
 ports_description:
-  8091/tcp: Only needed for http challenge (if mapping to different port `port` must be configured)
+  80/tcp: Only needed for http challenge

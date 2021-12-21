@@ -12,10 +12,10 @@ config() {
 env_export() {
     len=$((${#2} - 3))
     str=""
-	for i in {1..${len}}; do str=${str}*; done
+	for i in $(seq ${len}); do str=${str}*; done
     sanitized_value=${str}$(echo ${2} | grep -o ...$)
 
-    bashio::log.info "Setting ${1} to ${sanitized_value}"
+    bashio::log.debug "Setting ${1} to ${sanitized_value}"
     export "${1}=${2}"
 }
 

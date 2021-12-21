@@ -1,7 +1,19 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
+## 0.3.0
+### Improvements
+- more logs
+
+### Bug fix
+- fix sanitization
+
+### Others
+- Reverted back to serving HTTP challenge on port `80`, removed `port` option, added port mapping by default
+- Improve documentation
+- mark addon as `experimental`
+
 ## 0.2.1
 
-## Bug fix
+### Bug fix
 - create certificate immediately if does not exist
 
 ## 0.2.0
