@@ -1,10 +1,13 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: Lego
-version: "0.1.3"
+version: "0.2.0"
 slug: lego
 description: Let's Encrypt client and ACME library written in Go.
 url: "https://github.com/via-justa/go-acme-lego-addon/tree/main/lego"
-image: ghcr.io/via-justa/{arch}-lego
+# image: ghcr.io/via-justa/{arch}-lego
+hassio_api: true
+hassio_role: homeassistant 
+homeassistant_api: true
 map:
   - ssl:rw
   - share
@@ -14,11 +17,11 @@ arch:
   - aarch64
   - amd64
   - i386
-ingress: true
 options:
   provider: ""
   domains: []
   email: ""
+  check_time: "04:00"
   env_vars:
     - name: ""
       value: ""
@@ -27,14 +30,15 @@ schema:
   domains: 
     - str
   email: str
+  check_time: match(^\d\d\:\d\d$)
   env_vars:
     - name: match(^([A-Z0-9_])+$)
       value: str
-  challange: list(dns|http)?
+  challenge: list(dns|http)?
   renew_threshold: int?
-  interval: str?
+  port: int?
   log_level: list(trace|debug|info|notice|warning|error|fatal)?
 ports:
-  80/tcp: null
+  8091/tcp: null
 ports_description:
-  80/tcp: Only needed for http challenge
+  8091/tcp: Only needed for http challenge (if mapping to different port `port` must be configured)
