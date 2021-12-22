@@ -5,15 +5,18 @@ FROM $BUILD_FROM
 ARG LEGO_VERSION
 ARG BUILD_ARCH
 
-RUN apk add --no-cache -t deps git make musl-dev go \
-    && echo "Building lego version: ${LEGO_VERSION}" \
-    && git clone https://github.com/go-acme/lego.git \
-    && cd lego \
-    && git checkout ${LEGO_VERSION} \
-    && go env \
-    && CGO_ENABLED=0 GO111MODULE=on go build -v -trimpath -ldflags '-X "main.version=${LEGO_VERSION}"' -o /usr/local/bin/lego ./cmd/lego/ \
-    && apk del deps && rm -r /root/go \
-    && chmod +x /usr/local/bin/lego
+RUN \
+    set -x && \
+    if [ "${BUILD_ARCH}" = "armhf" ]; then \
+        curl -q -SL https://github.com/go-acme/lego/releases/download/${LEGO_VERSION}/lego_${LEGO_VERSION}_linux_armv7.tar.gz | tar xzf - -C /usr/local/bin; \
+    elif [ "${BUILD_ARCH}" = "aarch64" ]; then \
+        curl -q -SL https://github.com/go-acme/lego/releases/download/${LEGO_VERSION}/lego_${LEGO_VERSION}_linux_arm64.tar.gz | tar xzf - -C /usr/local/bin; \
+    elif [ "${BUILD_ARCH}" = "i386" ]; then \
+        curl -q -SL https://github.com/go-acme/lego/releases/download/${LEGO_VERSION}/lego_${LEGO_VERSION}_linux_arm64.tar.gz | tar xzf - -C /usr/local/bin; \
+    else \
+        curl -q -SL https://github.com/go-acme/lego/releases/download/${LEGO_VERSION}/lego_${LEGO_VERSION}_linux_386.tar.gz | tar xzf - -C /usr/local/bin; \
+    fi \
+    && lego --version
 
 RUN apk add tzdata jq
 

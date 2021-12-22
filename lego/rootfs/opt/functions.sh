@@ -23,16 +23,12 @@ get_tz() {
     curl -sSL -H "Authorization: Bearer $SUPERVISOR_TOKEN" http://supervisor/info | jq -r '.data.timezone'
 }
 
-restart_ha() {
-    curl -X POST -sSL -H "Authorization: Bearer $SUPERVISOR_TOKEN" http://supervisor/core/restart
-}
-
-execute() {
+update() {
     for domain in $(bashio::config 'domains'); do
         bashio::log.debug "checking domain ${domain}"
-        args="${1} --domains ${domain}"
+        args="${@} --domains ${domain}"
 
-        bashio::log.debug "running command: lego ${1} renew --days ${renew_threshold} --renew-hook restart_ha"
+        bashio::log.debug "running command: lego ${@} renew --days ${renew_threshold} --renew-hook /opt/restart_ha_hook.sh"
         bashio::log.info "Certificate for domain ${domain} found, checking if renew needed"
         lego ${args} renew --days ${renew_threshold} --renew-hook restart_ha
     done

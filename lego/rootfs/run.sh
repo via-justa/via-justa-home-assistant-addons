@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 CONFIG_PATH=/data/options.json
 
-source /functions.sh
+source /opt/functions.sh
 
 CERT_PATH=/ssl/lego
 mkdir -p ${CERT_PATH}
@@ -66,6 +66,8 @@ for domain in $(bashio::config 'domains'); do
         bashio::log.debug "running command: lego ${1} run"
         bashio::log.info "Certificate for domain ${domain} not found, issuing"
         lego ${args} run
+    else
+        bashio::log.info "Certificate for domain ${domain} found"
     fi
 done
 
@@ -73,7 +75,7 @@ done
 while true
 do
     if [ "$(date +"%H:%M")" == "$(bashio::config 'check_time')" ]; then
-        execute ${args}
+        update ${args}
     fi
     sleep 60
 done
