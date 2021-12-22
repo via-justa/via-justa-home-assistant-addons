@@ -1,4 +1,14 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
+## 0.3.1
+### Improvements
+- switch build to pull binary instead of building from source
+- move supporting functions
+- log certificate found
+
+### Bug fix
+- renew not collecting all arguments
+- renew hook requires file
+
 ## 0.3.0
 ### Improvements
 - more logs
