@@ -11,4 +11,4 @@ labels:
   org.opencontainers.image.source: "https://github.com/via-justa/ddns-client-addon"
   org.opencontainers.image.licenses: "Apache License 2.0"
 args:
-  DDNS_CLIENT_VERSION: 0.3.0
+  DDNS_CLIENT_VERSION: 0.3.1

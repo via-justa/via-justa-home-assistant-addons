@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: DynDNS Client
-version: "0.1.2"
+version: "0.2.0"
 slug: ddns-client
 description: DynDNS client to update dns record(s) with your current IP if your IP is not static
 url: "https://github.com/via-justa/ddns-client-addon/tree/main/ddns-client"
