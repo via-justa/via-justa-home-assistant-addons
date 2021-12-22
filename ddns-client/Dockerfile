@@ -6,15 +6,18 @@ FROM $BUILD_FROM
 ARG DDNS_CLIENT_VERSION
 ARG BUILD_ARCH
 
-RUN apk add --no-cache -t deps git make musl-dev go \
-    && echo "Building ddns-client version: ${DDNS_CLIENT_VERSION}" \
-    && git clone https://github.com/via-justa/ddns-client.git \
-    && cd ddns-client \
-    && git checkout ${DDNS_CLIENT_VERSION} \
-    && go env \
-    && go build -v -ldflags="-s -w -X 'main.appVersion=${DDNS_CLIENT_VERSION}'" -o /usr/local/bin/ddns-client \
-    && apk del deps && rm -r /root/go \
-    && chmod +x /usr/local/bin/ddns-client
+RUN \
+    set -x && \
+    if [ "${BUILD_ARCH}" = "armhf" ]; then \
+        curl -q -SL https://github.com/go-acme/lego/releases/download/${DDNS_CLIENT_VERSION}/lego_${DDNS_CLIENT_VERSION}_linux_armv7.tar.gz | tar xzf - -C /usr/local/bin; \
+    elif [ "${BUILD_ARCH}" = "aarch64" ]; then \
+        curl -q -SL https://github.com/go-acme/lego/releases/download/${DDNS_CLIENT_VERSION}/lego_${DDNS_CLIENT_VERSION}_linux_arm64.tar.gz | tar xzf - -C /usr/local/bin; \
+    elif [ "${BUILD_ARCH}" = "i386" ]; then \
+        curl -q -SL https://github.com/go-acme/lego/releases/download/${DDNS_CLIENT_VERSION}/lego_${DDNS_CLIENT_VERSION}_linux_386.tar.gz | tar xzf - -C /usr/local/bin; \
+    else \
+        curl -q -SL https://github.com/go-acme/lego/releases/download/${DDNS_CLIENT_VERSION}/lego_${DDNS_CLIENT_VERSION}_linux_${BUILD_ARCH}.tar.gz | tar xzf - -C /usr/local/bin; \
+    fi \
+    && lego --version
 
 RUN apk add ca-certificates
 

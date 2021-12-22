@@ -1,4 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
+## 0.2.1
+
+- bump ddns-client version
+- image build changes
+
 ## 0.2.0
 
 - bump ddns-client version
