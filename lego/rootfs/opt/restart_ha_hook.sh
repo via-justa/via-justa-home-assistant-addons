@@ -1,0 +1,1 @@
+curl -X POST -sSL -H "Authorization: Bearer $SUPERVISOR_TOKEN" http://supervisor/core/restart
