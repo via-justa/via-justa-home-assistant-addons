@@ -51,12 +51,8 @@ done
 
 bashio::log.info "using challenge ${challenge}"
 
-# set default common arguments
-if $(bashio::config 'dev'); then
-    args="--accept-tos --email $(bashio::config 'email') --path ${CERT_PATH} --server=https://acme-staging-v02.api.letsencrypt.org/directory"
-else
-    args="--accept-tos --email $(bashio::config 'email') --path ${CERT_PATH}"
-fi
+args="--accept-tos --email $(bashio::config 'email') --path ${CERT_PATH}"
+
 
 # Log domain list
 for domain in $(bashio::config 'domains'); do
