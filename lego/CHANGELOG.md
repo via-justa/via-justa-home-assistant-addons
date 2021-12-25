@@ -1,4 +1,16 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
+## 0.4.0
+
+### New features
+- optional restart of addons after certificate update
+
+### Bug fix
+- fix HA restart hook
+
+### Improvements
+- make option `check_time` optional
+- make restart of HA core optional
+
 ## 0.3.2
 
 ### Bug fix
