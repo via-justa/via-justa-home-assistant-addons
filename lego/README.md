@@ -17,7 +17,7 @@
 ## Features
 - Create/renew certificates for multiple domains
 - supports both ACME HTTP and DNS-01 challenges with [~100 different DNS providers](https://go-acme.github.io/lego/dns/)
-- Auto restart of Home-Assistant on certificate renewal
-- HTTP challenge using high port to free port 80 for other services.
+- Optional Auto restart of Home-Assistant on certificate renewal
+- Optional Auto restart of given Addons on certificate renewal
 
 **The addon is still under development so configuration and functionality changes my be introduced!**

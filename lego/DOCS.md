@@ -68,6 +68,12 @@ can also be wildcard domain (e.g. `*.domain.com`)
 
 Email Let's Encrypt register the certificates to
 
+**Option:** `restart` (required)
+
+Should Home-Assistant core and optionally the given addons be restarted on certificate renewal
+
+*default: `true`*
+
 **Option:** `provider` (required for DNS challenge)
 
 Name of the provider for the DNS challenge.
@@ -96,6 +102,17 @@ Number of days before the certificate expires to renew it.
 Time of day to run the renewal.
 
 *default: `04:00`*
+
+**Option:** `addons` (optional)
+
+List of addon IDs to restart when the certificate is renewed.
+To get the Addon ID go to the installed addon page and extract it from the URL of the page
+dor example the id of the installed `lego` here is `7ca25b85_lego`
+```
+https://ha.domain.com:8123/hassio/addon/7ca25b85_lego/config
+```
+
+*default: `''`*
 
 **Option:** `log_level` (optional)
 

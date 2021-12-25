@@ -29,11 +29,17 @@ bashio::log.debug "config::challenge ${challenge}"
 
 # Set renew_threshold
 renew_threshold=$(config renew_threshold "30")
-bashio::log.debug "config::renew_threshold ${renew_threshold}"
+bashio::log.debug "config::renew_threshold ${renew_threshold} days"
+
+# Set check_time
+check_time=$(config check_time "04:00")
+bashio::log.debug "config::check_time ${check_time}"
 
 bashio::log.debug "config::provider $(bashio::config 'provider')"
 bashio::log.debug "config::domains $(bashio::config 'domains')"
 bashio::log.debug "config::email $(bashio::config 'email')"
+bashio::log.debug "config::restart $(bashio::config 'restart')"
+bashio::log.debug "config::addons $(bashio::config 'addons')"
 
 # Export env vars
 for var in $(bashio::config 'env_vars|keys'); do
@@ -46,7 +52,11 @@ done
 bashio::log.info "using challenge ${challenge}"
 
 # set default common arguments
-args="--accept-tos --email $(bashio::config 'email') --path ${CERT_PATH}"
+if $(bashio::config 'dev'); then
+    args="--accept-tos --email $(bashio::config 'email') --path ${CERT_PATH} --server=https://acme-staging-v02.api.letsencrypt.org/directory"
+else
+    args="--accept-tos --email $(bashio::config 'email') --path ${CERT_PATH}"
+fi
 
 # Log domain list
 for domain in $(bashio::config 'domains'); do
@@ -62,10 +72,11 @@ fi
 
 # create new certificates
 for domain in $(bashio::config 'domains'); do
-    if [[ -z "${CERT_PATH}/certificates/${domain}.crt" ]]; then
-        bashio::log.debug "running command: lego ${1} run"
+    bashio::log.debug "Checking for certificate ${CERT_PATH}/certificates/${domain}.crt existence "
+    if [[ ! -f "${CERT_PATH}/certificates/${domain}.crt" ]]; then
+        bashio::log.debug "running command: lego ${args} run"
         bashio::log.info "Certificate for domain ${domain} not found, issuing"
-        lego ${args} run
+        lego ${args} --domains ${domain} run
     else
         bashio::log.info "Certificate for domain ${domain} found"
     fi
@@ -74,7 +85,7 @@ done
 # create/renew certificate
 while true
 do
-    if [ "$(date +"%H:%M")" == "$(bashio::config 'check_time')" ]; then
+    if [ "$(date +"%H:%M")" == "$check_time" ]; then
         update ${args}
     fi
     sleep 60

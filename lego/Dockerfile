@@ -22,6 +22,7 @@ RUN apk add tzdata jq
 
 COPY rootfs /
 
-RUN chmod a+x /run.sh
-
+RUN chmod a+x /run.sh && \
+    chmod a+x /opt/restart_ha_hook.sh
+    
 CMD [ "/run.sh" ]

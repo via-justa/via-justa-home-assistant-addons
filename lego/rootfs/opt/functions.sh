@@ -30,6 +30,28 @@ update() {
 
         bashio::log.debug "running command: lego ${@} renew --days ${renew_threshold} --renew-hook /opt/restart_ha_hook.sh"
         bashio::log.info "Certificate for domain ${domain} found, checking if renew needed"
-        lego ${args} renew --days ${renew_threshold} --renew-hook restart_ha
+        if $(bashio::config 'restart'); then
+            lego ${args} --domains ${domain} renew --days ${renew_threshold} --renew-hook /opt/restart_ha_hook.sh
+        else
+            lego ${args} --domains ${domain} renew --days ${renew_threshold}
+            bashio::log.info "Certificate for domain ${domain} was renewed, manual restart of Home-Assistant is required"
+        fi
     done
+}
+
+restart_addons() {
+    if [ "$(bashio::config 'addons')" != null ]; then
+        for addon in $(bashio::config 'addons'); do
+            restart_addon ${addon}
+        done
+    fi
+}
+
+restart_addon() {
+    msg=$(curl -X POST -sSL -o /dev/null -H "Authorization: Bearer $SUPERVISOR_TOKEN" http://supervisor/addons/$1/restart)
+    if [ $? -ne 0 ] ; then
+        bashio::log.error "Error restarting addon ${1}: $msg | jq -r '.message'"
+    else
+        bashio::log.info "Restarted addon $1"
+    fi
 }
