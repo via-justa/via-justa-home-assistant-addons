@@ -1,4 +1,8 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
+## 0.5.0
+### Others
+- Bump lego version to v4.6.0
+
 ## 0.4.0
 
 ### New features
