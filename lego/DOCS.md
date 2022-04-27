@@ -63,6 +63,7 @@ challenge: dns
 
 List of domains to generate certificate for.
 can also be wildcard domain (e.g. `*.domain.com`)
+You can create a certificate with multiple SANs by comma-separating them on a single line (e.g. `*.domain.com,host.domain.com`)
 
 **Option:** `email` (required)
 
