@@ -56,7 +56,7 @@ args="--accept-tos --email $(bashio::config 'email') --path ${CERT_PATH}"
 
 # Log domain list
 for domain in $(bashio::config 'domains'); do
-    sans=(${$domain//,/ })
+    sans=(${domain//,/ })
     bashio::log.info "Monitoring certificate for ${sans[0]}"
 done
 
@@ -69,7 +69,7 @@ fi
 
 # create new certificates
 for domain in $(bashio::config 'domains'); do
-    sans=(${$domain//,/ })
+    sans=(${domain//,/ })
     bashio::log.debug "Checking for certificate ${CERT_PATH}/certificates/${sans[0]}.crt existence "
     if [[ ! -f "${CERT_PATH}/certificates/${sans[0]}.crt" ]]; then
         bashio::log.debug "running command: lego ${args} run"
